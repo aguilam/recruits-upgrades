@@ -1,0 +1,25 @@
+{
+  "gui.recruitupgrades.config.title": "Recruit Upgrades Config",
+  "gui.recruitupgrades.config.category.levels": "Upgrade Levels",
+  "gui.recruitupgrades.config.error.title": "Config Error",
+  "gui.recruitupgrades.config.error.server_only": "Server Configs can only be edited inside a World!",
+  "gui.recruitupgrades.config.back": "Back",
+
+  "gui.recruitupgrades.config.level_title": "Level %s — %s",
+  "gui.recruitupgrades.config.field.name": "Name",
+  "gui.recruitupgrades.config.field.name.tooltip": "Display name of this upgrade level",
+  "gui.recruitupgrades.config.field.max_chunks": "Max Chunks",
+  "gui.recruitupgrades.config.field.max_chunks.tooltip": "Maximum claimed chunks at this level",
+  "gui.recruitupgrades.config.field.cost": "Upgrade Cost (Emeralds)",
+  "gui.recruitupgrades.config.field.cost.tooltip": "Cost to upgrade TO this level",
+
+  "gui.recruitupgrades.claim.max_level": "Max Level: %s",
+  "gui.recruitupgrades.claim.upgrade_btn": "Upgrade: %s (%s Em.)",
+
+  "upgrade.recruitupgrades.level.0": "Settlement",
+  "upgrade.recruitupgrades.level.1": "Village",
+  "upgrade.recruitupgrades.level.2": "Town",
+  "upgrade.recruitupgrades.level.3": "City",
+  "upgrade.recruitupgrades.level.4": "Metropolis",
+  "upgrade.recruitupgrades.level.5": "Citadel"
+}

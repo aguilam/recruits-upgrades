@@ -1,0 +1,25 @@
+{
+  "gui.recruitupgrades.config.title": "Настройки Recruit Upgrades",
+  "gui.recruitupgrades.config.category.levels": "Уровни улучшений",
+  "gui.recruitupgrades.config.error.title": "Ошибка конфигурации",
+  "gui.recruitupgrades.config.error.server_only": "Настройки сервера можно менять только находясь в мире!",
+  "gui.recruitupgrades.config.back": "Назад",
+
+  "gui.recruitupgrades.config.level_title": "Уровень %s — %s",
+  "gui.recruitupgrades.config.field.name": "Название",
+  "gui.recruitupgrades.config.field.name.tooltip": "Отображаемое имя этого уровня",
+  "gui.recruitupgrades.config.field.max_chunks": "Макс. чанков",
+  "gui.recruitupgrades.config.field.max_chunks.tooltip": "Лимит чанков на этом уровне",
+  "gui.recruitupgrades.config.field.cost": "Цена улучшения (Изумруды)",
+  "gui.recruitupgrades.config.field.cost.tooltip": "Цена перехода НА этот уровень",
+
+  "gui.recruitupgrades.claim.max_level": "Макс. ур.: %s",
+  "gui.recruitupgrades.claim.upgrade_btn": "Улучшить: %s (%s изум.)",
+
+  "upgrade.recruitupgrades.level.0": "Поселение",
+  "upgrade.recruitupgrades.level.1": "Деревня",
+  "upgrade.recruitupgrades.level.2": "Городок",
+  "upgrade.recruitupgrades.level.3": "Город",
+  "upgrade.recruitupgrades.level.4": "Мегаполис",
+  "upgrade.recruitupgrades.level.5": "Цитадель"
+}

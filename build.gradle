@@ -71,7 +71,7 @@ dependencies {
 
     implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:11.1.118")
 
-    implementation fg.deobf("libs:recruits:1.0") 
+    implementation fg.deobf("libs:recruits:1.15.2") 
 }
 
 jar {

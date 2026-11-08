@@ -5,7 +5,7 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 
 public class NetworkHandler {
-    private static final String PROTOCOL_VERSION = "1";
+    private static final String PROTOCOL_VERSION = "2";
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
             new ResourceLocation("recruitupgrades", "main"),
             () -> PROTOCOL_VERSION,
@@ -16,5 +16,6 @@ public class NetworkHandler {
     public static void register() {
         int id = 0;
         CHANNEL.registerMessage(id++, PacketUpgradeClaim.class, PacketUpgradeClaim::encode, PacketUpgradeClaim::decode, PacketUpgradeClaim::handle);
+        CHANNEL.registerMessage(id++, PacketSyncClaimData.class, PacketSyncClaimData::encode, PacketSyncClaimData::decode, PacketSyncClaimData::handle);
     }
 }

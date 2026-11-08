@@ -3,7 +3,8 @@
   "package": "com.aguilam.recruitupgrades.mixin",
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
-  "mixins": ["MixinRecruitsClaim"],
+  "mixins": ["MixinRecruitsClaim", "MixinMessageUpdateClaim"],
+  "client": ["MixinClaimInfoMenu", "MixinWorldMapClaimController"],
   "injectors": {
     "defaultRequire": 1
   }

@@ -5,7 +5,7 @@ issueTrackerURL = "https://github.com/aguilam/recruits-upgrades/issues"
 
 [[mods]]
 modId = "recruitupgrades"
-version = "1.0.0" 
+version = "1.0.1" 
 displayName = "Recruits Upgrades"
 authors = "Aguilam"
 displayURL = "https://github.com/aguilam/recruits-upgrades"
@@ -31,7 +31,7 @@ This mod allows you to upgrade your recruit claims, granting access to more chun
 [[dependencies.recruitupgrades]]
     modId = "recruits"
     mandatory = true
-    versionRange = "[1.0,)"
+    versionRange = "[1.15.1,)"
     ordering = "AFTER" 
     side = "BOTH"
 

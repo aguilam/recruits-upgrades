@@ -12,7 +12,10 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.PacketDistributor;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.function.Supplier;
 
@@ -59,16 +62,21 @@ public class PacketUpgradeClaim {
                             }
                         }
 
-                        if (count >= next.costEmeralds) {
-                            player.getInventory().clearOrCountMatchingItems(p -> p.is(Items.EMERALD), next.costEmeralds, player.inventoryMenu.getCraftSlots());
+                        if (count >= next.costEmeralds || player.isCreative()) {
+                            if (!player.isCreative()) {
+                                player.getInventory().clearOrCountMatchingItems(p -> p.is(Items.EMERALD), next.costEmeralds, player.inventoryMenu.getCraftSlots());
+                            }
                             
                             claimLvl.setUpgradeLevel(next.level);
                             
                             ClaimEvents.recruitsClaimManager.addOrUpdateClaim(level, claim);
+
+                            Map<UUID, PacketSyncClaimData.Entry> sync = new HashMap<>();
+                            sync.put(claim.getUUID(), new PacketSyncClaimData.Entry(next.level, next.maxChunks));
+                            NetworkHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), new PacketSyncClaimData(false, 0, sync));
                             
                             player.level().playSound(null, player.blockPosition(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 1f, 1f);
                             
-                            System.out.println("Recruit Upgrades: Claim " + claim.getName() + " upgraded to " + next.name + " (Level " + next.level + ")");
                         }
                     }
                 }

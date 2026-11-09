@@ -8,22 +8,20 @@ import com.talhanation.recruits.config.RecruitsServerConfig;
 import com.talhanation.recruits.world.RecruitsClaim;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.ConfigScreenHandler;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.server.ServerStartedEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.server.ServerLifecycleHooks;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.server.ServerStartedEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -36,29 +34,20 @@ public class RecruitUpgradesMod {
     public static final String MOD_ID = "recruitupgrades";
     public static final Logger LOGGER = LogManager.getLogger();
 
-    public RecruitUpgradesMod() {
-        IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
-        modBus.addListener(this::setup);
+    public RecruitUpgradesMod(IEventBus modBus, ModContainer container) {
         modBus.addListener(this::onConfigLoading);
         modBus.addListener(this::onConfigReloading);
+        modBus.addListener(NetworkHandler::register);
 
-        MinecraftForge.EVENT_BUS.addListener(this::onServerStarted);
-        MinecraftForge.EVENT_BUS.addListener(this::onPlayerLoggedIn);
+        NeoForge.EVENT_BUS.addListener(this::onServerStarted);
+        NeoForge.EVENT_BUS.addListener(this::onPlayerLoggedIn);
 
-        ModLoadingContext.get().registerConfig(
-            ModConfig.Type.SERVER, UpgradesConfig.SPEC
-        );
+        container.registerConfig(ModConfig.Type.SERVER, UpgradesConfig.SPEC);
 
         if (FMLEnvironment.dist == Dist.CLIENT && ModList.get().isLoaded("cloth_config")) {
-            ModLoadingContext.get().registerExtensionPoint(
-                    ConfigScreenHandler.ConfigScreenFactory.class,
-                    () -> new ConfigScreenHandler.ConfigScreenFactory(ConfigScreenFactory::create)
-            );
+            container.registerExtensionPoint(IConfigScreenFactory.class,
+                    (modContainer, parent) -> ConfigScreenFactory.create(modContainer, parent));
         }
-    }
-
-    private void setup(final FMLCommonSetupEvent event) {
-        event.enqueueWork(NetworkHandler::register);
     }
 
     private void onConfigLoading(ModConfigEvent.Loading event) {
@@ -80,10 +69,7 @@ public class RecruitUpgradesMod {
 
     private void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
-            player.server.execute(() -> NetworkHandler.CHANNEL.send(
-                    PacketDistributor.PLAYER.with(() -> player),
-                    buildSyncPacket()
-            ));
+            PacketDistributor.sendToPlayer(player, buildSyncPacket());
         }
     }
 
@@ -125,6 +111,6 @@ public class RecruitUpgradesMod {
         if (server == null) {
             return;
         }
-        server.execute(() -> NetworkHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), buildSyncPacket()));
+        server.execute(() -> PacketDistributor.sendToAllPlayers(buildSyncPacket()));
     }
 }

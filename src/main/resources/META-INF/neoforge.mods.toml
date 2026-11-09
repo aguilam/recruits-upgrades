@@ -1,0 +1,47 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "All Rights Reserved"
+issueTrackerURL = "https://github.com/aguilam/recruits-upgrades/issues"
+
+[[mods]]
+modId = "recruitupgrades"
+version = "1.0.1"
+displayName = "Recruits Upgrades"
+authors = "Aguilam"
+displayURL = "https://github.com/aguilam/recruits-upgrades"
+logoFile = "assets/recruitupgrades/icon.png"
+description = '''
+An add-on for the Recruits mod.
+This mod allows you to upgrade your recruit claims, granting access to more chunks and expanding your territory.
+'''
+
+[[mixins]]
+config = "recruitupgrades.mixins.json"
+
+[[dependencies.recruitupgrades]]
+    modId = "minecraft"
+    type = "required"
+    versionRange = "[1.21.1,1.22)"
+    ordering = "NONE"
+    side = "BOTH"
+
+[[dependencies.recruitupgrades]]
+    modId = "neoforge"
+    type = "required"
+    versionRange = "[21.1.4,)"
+    ordering = "NONE"
+    side = "BOTH"
+
+[[dependencies.recruitupgrades]]
+    modId = "recruits"
+    type = "required"
+    versionRange = "[1.15.2,)"
+    ordering = "AFTER"
+    side = "BOTH"
+
+[[dependencies.recruitupgrades]]
+    modId = "cloth_config"
+    type = "optional"
+    versionRange = "[15,)"
+    ordering = "AFTER"
+    side = "BOTH"

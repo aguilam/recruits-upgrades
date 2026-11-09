@@ -8,7 +8,7 @@ import com.talhanation.recruits.world.RecruitsFaction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -21,10 +21,10 @@ public class MixinMessageUpdateClaim {
 
     @Redirect(
             method = "validateClaimUpdate",
-            at = @At(value = "INVOKE", target = "Lnet/minecraftforge/common/ForgeConfigSpec$IntValue;get()Ljava/lang/Object;", ordinal = 0),
+            at = @At(value = "INVOKE", target = "Lnet/neoforged/neoforge/common/ModConfigSpec$IntValue;get()Ljava/lang/Object;", ordinal = 0),
             remap = false
     )
-    private Object recruitupgrades$claimUpdateLimit(ForgeConfigSpec.IntValue value, ServerLevel level, ServerPlayer player, RecruitsClaim requested) {
+    private Object recruitupgrades$claimUpdateLimit(ModConfigSpec.IntValue value, ServerLevel level, ServerPlayer player, RecruitsClaim requested) {
         RecruitsClaim existing = ClaimEvents.recruitsClaimManager != null
                 ? ClaimEvents.recruitsClaimManager.getClaim(requested.getUUID())
                 : null;
@@ -43,10 +43,10 @@ public class MixinMessageUpdateClaim {
 
     @Redirect(
             method = "validateAddChunk",
-            at = @At(value = "INVOKE", target = "Lnet/minecraftforge/common/ForgeConfigSpec$IntValue;get()Ljava/lang/Object;", ordinal = 0),
+            at = @At(value = "INVOKE", target = "Lnet/neoforged/neoforge/common/ModConfigSpec$IntValue;get()Ljava/lang/Object;", ordinal = 0),
             remap = false
     )
-    private Object recruitupgrades$addChunkLimit(ForgeConfigSpec.IntValue value, ServerPlayer player, RecruitsClaim existing, Set<ChunkPos> requested, Set<ChunkPos> oldChunks) {
+    private Object recruitupgrades$addChunkLimit(ModConfigSpec.IntValue value, ServerPlayer player, RecruitsClaim existing, Set<ChunkPos> requested, Set<ChunkPos> oldChunks) {
         if (existing instanceof IClaimLevel claimLevel) {
             return claimLevel.getMaxChunksLimit();
         }

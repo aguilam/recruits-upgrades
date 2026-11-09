@@ -1,77 +1,30 @@
-buildscript {
-    repositories {
-        maven { url = 'https://maven.minecraftforge.net' }
-        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '6.0.21'
-        classpath 'org.spongepowered:mixingradle:0.7.+'
-    }
+plugins {
+    id 'java'
 }
-
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.spongepowered.mixin'
 
 group = 'com.aguilam'
 version = '1.0.0'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
-
-minecraft {
-    mappings channel: 'official', version: '1.20.1'
-
-    runs {
-        client {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
-            mods {
-                recruitupgrades {
-                    source sourceSets.main
-                }
-            }
-        }
-        server {
-            workingDirectory project.file('run')
-            property 'forge.logging.console.level', 'debug'
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            mods {
-                recruitupgrades {
-                    source sourceSets.main
-                }
-            }
-        }
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
     }
-}
-
-mixin {
-    add sourceSets.main, "recruitupgrades.refmap.json"
-    config "recruitupgrades.mixins.json"
 }
 
 repositories {
-    mavenCentral()
-    maven { url = 'https://maven.minecraftforge.net' }
-    maven { url "https://maven.shedaniel.me/" }
-    maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-    
-    flatDir {
-        dirs 'libs'
-    }
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.20.1-47.2.0'
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    compileOnly fileTree(dir: 'libs/neoforge', include: '*.jar')
+    compileOnly files(
+            'libs/recruits-1.21.1-1.15.2.jar',
+            'libs/cloth-config-15.0.140-neoforge.jar'
+    )
+}
 
-    implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:11.1.118")
-
-    implementation fg.deobf("libs:recruits:1.15.2") 
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 17
 }
 
 jar {
@@ -83,8 +36,7 @@ jar {
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.jar.archiveVersion,
                 "Implementation-Vendor"   : "aguilam",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs": "recruitupgrades.mixins.json"
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
 }

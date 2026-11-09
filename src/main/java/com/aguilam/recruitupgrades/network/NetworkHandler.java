@@ -1,21 +1,14 @@
 package com.aguilam.recruitupgrades.network;
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 public class NetworkHandler {
     private static final String PROTOCOL_VERSION = "2";
-    public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
-            new ResourceLocation("recruitupgrades", "main"),
-            () -> PROTOCOL_VERSION,
-            PROTOCOL_VERSION::equals,
-            PROTOCOL_VERSION::equals
-    );
 
-    public static void register() {
-        int id = 0;
-        CHANNEL.registerMessage(id++, PacketUpgradeClaim.class, PacketUpgradeClaim::encode, PacketUpgradeClaim::decode, PacketUpgradeClaim::handle);
-        CHANNEL.registerMessage(id++, PacketSyncClaimData.class, PacketSyncClaimData::encode, PacketSyncClaimData::decode, PacketSyncClaimData::handle);
+    public static void register(RegisterPayloadHandlersEvent event) {
+        PayloadRegistrar registrar = event.registrar(PROTOCOL_VERSION);
+        registrar.playToServer(PacketUpgradeClaim.TYPE, PacketUpgradeClaim.CODEC, PacketUpgradeClaim::handle);
+        registrar.playToClient(PacketSyncClaimData.TYPE, PacketSyncClaimData.CODEC, PacketSyncClaimData::handle);
     }
 }

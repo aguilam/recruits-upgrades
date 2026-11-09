@@ -10,13 +10,15 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.neoforged.fml.ModContainer;
 
 public final class ConfigScreenFactory {
 
     private ConfigScreenFactory() {
     }
 
-    public static Screen create(Minecraft minecraft, Screen parent) {
+    public static Screen create(ModContainer container, Screen parent) {
+        Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.level == null) {
             return new Screen(Component.translatable("gui.recruitupgrades.config.error.title")) {
                 @Override
@@ -30,7 +32,7 @@ public final class ConfigScreenFactory {
 
                 @Override
                 public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-                    this.renderBackground(guiGraphics);
+                    this.renderBackground(guiGraphics, mouseX, mouseY, partialTick);
                     guiGraphics.drawCenteredString(this.font,
                             Component.translatable("gui.recruitupgrades.config.error.server_only"),
                             this.width / 2, this.height / 2 - 20, 0xFF5555);

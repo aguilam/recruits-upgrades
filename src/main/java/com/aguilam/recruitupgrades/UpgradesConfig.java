@@ -1,25 +1,25 @@
 package com.aguilam.recruitupgrades;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UpgradesConfig {
 
-    public static final ForgeConfigSpec SPEC;
+    public static final ModConfigSpec SPEC;
     public static final List<LevelConfig> LEVELS = new ArrayList<>();
 
     public static class LevelConfig {
-        public final ForgeConfigSpec.ConfigValue<String> name;
-        public final ForgeConfigSpec.IntValue maxChunks;
-        public final ForgeConfigSpec.IntValue cost;
+        public final ModConfigSpec.ConfigValue<String> name;
+        public final ModConfigSpec.IntValue maxChunks;
+        public final ModConfigSpec.IntValue cost;
 
         public final String defaultName;
         public final int defaultMaxChunks;
         public final int defaultCost;
 
-        LevelConfig(ForgeConfigSpec.Builder builder, int level,
+        LevelConfig(ModConfigSpec.Builder builder, int level,
                      String defaultName, int defaultChunks, int defaultCost) {
             this.defaultName = defaultName;
             this.defaultMaxChunks = defaultChunks;
@@ -44,7 +44,7 @@ public class UpgradesConfig {
     }
 
     static {
-        ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
+        ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
         builder.comment("Claim Upgrade Settings").push("upgrades");
 
         addLevel(builder, 0, "upgrade.recruitupgrades.level.0",  50,  0);
@@ -58,7 +58,7 @@ public class UpgradesConfig {
         SPEC = builder.build();
     }
 
-    private static void addLevel(ForgeConfigSpec.Builder builder,
+    private static void addLevel(ModConfigSpec.Builder builder,
                                   int level, String name, int chunks, int cost) {
         LEVELS.add(new LevelConfig(builder, level, name, chunks, cost));
     }

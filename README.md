@@ -19,21 +19,21 @@ You can now upgrade your faction claims using emeralds to significantly increase
 ## Dependencies
 
 - **Recruits** (required)
-- **Cloth Config** (recommended — provides a nice in-game configuration menu)
-- Forge
+- **Cloth Config** (recommended — provides in-game configuration menu)
+- NeoForge 1.21.1
 
 ## Installation
 
 1. Build the mod (see _Building from source_ below).
 2. Copy the resulting `.jar` file into your Minecraft `mods/` folder.
-3. Launch the game with the correct Forge version and the required mods installed.
+3. Launch the game with the correct NeoForge version and the required mods installed.
 
 ## Configuration
 
 The mod uses **Cloth Config**, so settings are available in-game:
 
 - Go to Mod Options / Config screen (or Mod Menu)
-- You can freely edit:
+- You can edit:
   - Names of each upgrade level
   - Emerald cost for each upgrade
   - Maximum number of chunks per level
@@ -52,9 +52,6 @@ Default upgrade levels:
 From the project root:
 
 ```bash
-# Run client in development environment
-./gradlew runClient
-
 # Build the release jar
 ./gradlew build
 ```
